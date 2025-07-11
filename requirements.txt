@@ -8,3 +8,5 @@ openai
 fpdf
 PyPDF2
 psycopg2-binary
+pydantic
+pydantic-settings 
