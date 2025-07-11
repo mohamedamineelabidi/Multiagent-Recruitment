@@ -57,7 +57,7 @@ arya_api/
 
 ### **Data Layer**
 - **`app/models/`**: SQLAlchemy ORM models for database tables
-- **Database**: SQLite for development, PostgreSQL for production
+- **Database**: PostgreSQL (production default), SQLite (development only)
 
 ### **Business Logic Layer**
 - **`app/services/`**: Core business logic and external service integration

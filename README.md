@@ -498,6 +498,9 @@ Create a `.env` file in the root directory:
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
 DATABASE_URL=sqlite:///./arya.db
+
+# For production (Azure PostgreSQL):
+DATABASE_URL=postgresql://postgres:password@arya-database-dev-server.postgres.database.azure.com:5432/arya_db?sslmode=require
 ```
 
 ### 4. Run the Application
@@ -800,7 +803,8 @@ arya_api/
 
 ### Database Configuration
 
-The application uses SQLite by default for simplicity. For production environments, PostgreSQL is recommended.
+The application uses **PostgreSQL** by default for production environments.  
+SQLite is supported for local development and testing.
 
 #### Local PostgreSQL Setup
 ```env
