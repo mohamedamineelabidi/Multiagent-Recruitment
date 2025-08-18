@@ -4,6 +4,16 @@
 
 ARYA (AI Recruitment & Yield Assessment) is a sophisticated backend API that revolutionizes the hiring process by leveraging artificial intelligence to create project-based assessments, evaluate candidates, and provide intelligent rankings.
 
+## 🌐 Live Deployment
+
+The ARYA API is deployed on Microsoft Azure and available at:
+
+- **🔗 API Base URL**: https://arya-recruitment-api-v2.azurewebsites.net
+- **📚 Interactive API Documentation (Swagger)**: https://arya-recruitment-api-v2.azurewebsites.net/docs
+- **📖 API Documentation (ReDoc)**: https://arya-recruitment-api-v2.azurewebsites.net/redoc
+
+> **Note**: For deployment instructions and environment management, see [DEPLOYMENT.md](DEPLOYMENT.md)
+
 ## 🏗️ System Architecture & Agent Framework
 
 ARYA API follows a **multi-agent architecture** where each component acts as a specialized agent with distinct responsibilities. This design ensures separation of concerns, scalability, and maintainability.
@@ -1895,7 +1905,40 @@ This enhanced system provides:
 
 The improvements ensure more accurate, fair, and comprehensive candidate assessment while maintaining the authenticity that prevents AI shortcuts.
 
-## �📈 Future Enhancements
+## 🚀 Deployment
+
+### Azure Deployment
+The ARYA API is deployed on Microsoft Azure using containerization. For complete deployment instructions, environment variable management, and troubleshooting, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+#### Quick Environment Variable Updates
+Use the provided PowerShell script to easily update environment variables:
+
+```powershell
+# Update database URL
+.\scripts\update-env.ps1 -DatabaseUrl "postgresql://user:pass@host:5432/db?sslmode=require"
+
+# Update Azure OpenAI settings
+.\scripts\update-env.ps1 -OpenAIApiKey "your-key" -OpenAIApiBase "https://your-resource.cognitiveservices.azure.com/"
+
+# Show current environment variables
+.\scripts\update-env.ps1 -ShowCurrent
+```
+
+#### Deployment Architecture
+- **Azure Container Registry**: `aryaregistryv2.azurecr.io`
+- **App Service**: Linux container on Basic B1 plan
+- **Database**: Azure Database for PostgreSQL
+- **AI Service**: Azure OpenAI Service
+- **Region**: France Central
+
+#### Monitoring
+- **Application Logs**: Available through Azure Portal or Azure CLI
+- **Health Checks**: Built-in App Service monitoring
+- **Performance Metrics**: Azure Application Insights (if configured)
+
+For detailed deployment steps, environment management, and troubleshooting, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+## 📈 Future Enhancements
 
 - [ ] Real-time notifications
 - [ ] Advanced analytics dashboard
