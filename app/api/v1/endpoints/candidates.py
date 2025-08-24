@@ -15,16 +15,33 @@ router = APIRouter()
 
 @router.post("/jobs/{job_id}/candidates", response_model=schemas.CandidateResponse, status_code=status.HTTP_201_CREATED, tags=["Candidates"])
 def create_candidate_for_job(job_id: int, candidate_create: schemas.CandidateCreate, db: Session = Depends(get_db)):
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+    logger = logging.getLogger(__name__)
+    logger.debug(f"Received job_id: {job_id}, candidate_create: {candidate_create.dict()}")
     """
     Register a new candidate for a specific job.
     """
     # Check if the job exists
-    job = db.query(models.Job).filter(models.Job.id == job_id).first()
+    try:
+        job = db.query(models.Job).filter(models.Job.id == job_id).first()
+        logger.debug(f"Queried job: {job}")
+    except Exception as e:
+        logger.error(f"Error querying job: {e}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error while querying job.")
     if not job:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Job not found")
 
     # Check if a candidate with this email already exists for this job
-    existing_candidate = db.query(models.Candidate).filter(
+    try:
+        existing_candidate = db.query(models.Candidate).filter(
+            models.Candidate.email == candidate_create.email,
+            models.Candidate.job_id == job_id
+    ).first()
+        logger.debug(f"Queried existing_candidate: {existing_candidate}")
+    except Exception as e:
+        logger.error(f"Error querying existing candidate: {e}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error while querying candidate.")
         models.Candidate.email == candidate_create.email, 
         models.Candidate.job_id == job_id
     ).first()
@@ -35,7 +52,15 @@ def create_candidate_for_job(job_id: int, candidate_create: schemas.CandidateCre
         )
 
     # Create new candidate
-    new_candidate = models.Candidate(**candidate_create.dict(), job_id=job_id)
+    try:
+        new_candidate = models.Candidate(**candidate_create.dict(), job_id=job_id)
+        db.add(new_candidate)
+        db.commit()
+        db.refresh(new_candidate)
+        logger.debug(f"Created new_candidate: {new_candidate}")
+    except Exception as e:
+        logger.error(f"Error creating new candidate: {e}")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error while creating candidate.")
     db.add(new_candidate)
     db.commit()
     db.refresh(new_candidate)
