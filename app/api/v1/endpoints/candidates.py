@@ -42,6 +42,9 @@ def create_candidate_for_job(job_id: int, candidate_create: schemas.CandidateCre
     except Exception as e:
         logger.error(f"Error querying existing candidate: {e}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error while querying candidate.")
+    
+    # Check if candidate already exists for this job
+    existing_candidate = db.query(models.Candidate).filter(
         models.Candidate.email == candidate_create.email, 
         models.Candidate.job_id == job_id
     ).first()
