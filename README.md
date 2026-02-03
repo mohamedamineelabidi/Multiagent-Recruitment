@@ -149,7 +149,7 @@ Final Score = (CV Score × 0.30) + (Average Project Score × 0.70)
 ### Database Schema
 
 <div align="center">
-  <img src="img/databse_schema.png" alt="Database Schema" width="800"/>
+  <img src="img/database_schema.png" alt="Database Schema" width="800"/>
   <br/>
   <em>Figure 4: Database Entity Relationship Diagram</em>
 </div>
