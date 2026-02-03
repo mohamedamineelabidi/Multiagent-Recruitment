@@ -57,21 +57,29 @@ ARYA addresses these challenges through intelligent automation:
 
 ## Author
 
-### Mohamed Amine Elabidi
-
-**AI & Data Engineer**
-
-Specializing in building intelligent systems that solve real-world business problems.
-
-**Focus Areas:**
-- Artificial Intelligence - LLMs, NLP, Machine Learning
-- Data Engineering - Pipelines, ETL, Data Architecture
-- Cloud Computing - Azure, AWS, Containerization
-- System Design - Microservices, Multi-Agent Architectures
-
-**Contact:**
-- GitHub: [github.com/mohamedamineelabidi](https://github.com/mohamedamineelabidi)
-- LinkedIn: [linkedin.com/in/mohamedamineelabidi](https://linkedin.com/in/mohamedamineelabidi)
+<table>
+  <tr>
+    <td width="150">
+      <img src="https://github.com/mohamedamineelabidi.png" width="150" alt="Mohamed Amine Elabidi"/>
+    </td>
+    <td>
+      <h3>Mohamed Amine Elabidi</h3>
+      <p><strong>AI & Data Engineer</strong></p>
+      <p>Specializing in building intelligent systems that solve real-world business problems.</p>
+      <p><strong>Focus Areas:</strong></p>
+      <ul>
+        <li>Artificial Intelligence - LLMs, NLP, Machine Learning</li>
+        <li>Data Engineering - Pipelines, ETL, Data Architecture</li>
+        <li>Cloud Computing - Azure, AWS, Containerization</li>
+        <li>System Design - Microservices, Multi-Agent Architectures</li>
+      </ul>
+      <p>
+        <a href="https://github.com/mohamedamineelabidi">GitHub</a> |
+        <a href="https://www.linkedin.com/in/maelabidi">LinkedIn</a>
+      </p>
+    </td>
+  </tr>
+</table>
 
 ---
 
