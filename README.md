@@ -121,38 +121,80 @@ Final Score = (CV Score × 0.30) + (Average Project Score × 0.70)
 <div align="center">
   <img src="img/architecture_arya_multiagent_azure.png" alt="High-Level Architecture" width="800"/>
   <br/>
-  <em>Figure 1: ARYA System Architecture</em>
+  <em>Figure 1: ARYA Multi-Agent System Architecture</em>
 </div>
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              CLIENT LAYER                                    │
-│                    Web Apps - Mobile - Third-party APIs                      │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                             HTTPS (TLS 1.3)
-                                      │
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           API GATEWAY LAYER                                  │
-│                        FastAPI Application                                   │
-│              CORS - Validation - Routing - Logging                          │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                      │
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         ENDPOINT AGENTS LAYER                                │
-│           Jobs Agent    -    Candidates Agent    -    Submissions Agent      │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                      │
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                          SERVICE AGENTS LAYER                                │
-│        Project Service    -    Evaluation Service    -    PDF Service        │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                      │
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        EXTERNAL SERVICES LAYER                               │
-│                  OpenAI Agent (GPT-4o)    -    Database Agent                │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+<br/>
+
+### Master Architecture Blueprint
+
+<div align="center">
+  <img src="img/master_architecture_blueprint.png" alt="Master Architecture Blueprint" width="800"/>
+  <br/>
+  <em>Figure 2: Complete System Blueprint</em>
+</div>
+
+<br/>
+
+### Azure Infrastructure
+
+<div align="center">
+  <img src="img/architecture_infrastructure_azure.png" alt="Azure Infrastructure" width="800"/>
+  <br/>
+  <em>Figure 3: Azure Cloud Infrastructure</em>
+</div>
+
+<br/>
+
+### Database Schema
+
+<div align="center">
+  <img src="img/databse_schema.png" alt="Database Schema" width="800"/>
+  <br/>
+  <em>Figure 4: Database Entity Relationship Diagram</em>
+</div>
+
+<br/>
+
+### API Request Flow
+
+<div align="center">
+  <img src="img/api_request.png" alt="API Request Flow" width="800"/>
+  <br/>
+  <em>Figure 5: API Request Processing Flow</em>
+</div>
+
+<br/>
+
+### Job Creation Workflow
+
+<div align="center">
+  <img src="img/automatedjob_project_flow.png" alt="Job Creation Flow" width="800"/>
+  <br/>
+  <em>Figure 6: Automated Job and Project Generation Flow</em>
+</div>
+
+<br/>
+
+### CI/CD Pipeline
+
+<div align="center">
+  <img src="img/cicd_pipline_deployement.png" alt="CI/CD Pipeline" width="800"/>
+  <br/>
+  <em>Figure 7: Continuous Integration and Deployment Pipeline</em>
+</div>
+
+<br/>
+
+### Security Architecture
+
+<div align="center">
+  <img src="img/infrastructure_security.png" alt="Security Architecture" width="800"/>
+  <br/>
+  <em>Figure 8: Infrastructure Security Layers</em>
+</div>
+
+<br/>
 
 ### Technology Stack
 
@@ -293,6 +335,7 @@ For detailed deployment instructions, see [Deployment Guide](DEPLOYMENT.md).
 | Document | Description |
 |----------|-------------|
 | [Architecture Diagrams](docs/ARCHITECTURE_DIAGRAMS.md) | Visual system architecture documentation |
+| [Azure Architecture](docs/AZURE_ARCHITECTURE.md) | Azure cloud infrastructure details |
 | [System Analysis](docs/SYSTEM_ARCHITECTURE_ANALYSIS.md) | Detailed technical analysis |
 | [Deployment Guide](DEPLOYMENT.md) | Azure deployment instructions |
 | [Contributing Guide](CONTRIBUTING.md) | Contribution guidelines |
