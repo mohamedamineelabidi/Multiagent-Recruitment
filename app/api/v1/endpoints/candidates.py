@@ -1,73 +1,99 @@
-from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile
+"""
+Candidates API Endpoints
+
+This module handles all candidate-related HTTP operations including:
+- Candidate registration for jobs
+- CV upload and AI-powered evaluation
+- Candidate report generation
+"""
+
+import logging
+import os
+import uuid
+from io import BytesIO
+
+import PyPDF2
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
-import uuid
-import PyPDF2
-from io import BytesIO
-import os
 
-from app.core.db import get_db
 from app import models
 from app.api.v1 import schemas
+from app.core.db import get_db
 from app.services import evaluation_service, pdf_service
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-@router.post("/jobs/{job_id}/candidates", response_model=schemas.CandidateResponse, status_code=status.HTTP_201_CREATED, tags=["Candidates"])
-def create_candidate_for_job(job_id: int, candidate_create: schemas.CandidateCreate, db: Session = Depends(get_db)):
-    import logging
-    logging.basicConfig(level=logging.DEBUG)
-    logger = logging.getLogger(__name__)
-    logger.debug(f"Received job_id: {job_id}, candidate_create: {candidate_create.dict()}")
+
+@router.post(
+    "/jobs/{job_id}/candidates",
+    response_model=schemas.CandidateResponse,
+    status_code=status.HTTP_201_CREATED,
+    tags=["Candidates"],
+    summary="Register a new candidate",
+    description="Register a new candidate for a specific job posting."
+)
+def create_candidate_for_job(
+    job_id: int,
+    candidate_create: schemas.CandidateCreate,
+    db: Session = Depends(get_db)
+):
     """
     Register a new candidate for a specific job.
+    
+    Args:
+        job_id: The ID of the job to apply for
+        candidate_create: Candidate registration data (name, email)
+        db: Database session
+        
+    Returns:
+        CandidateResponse: The created candidate object
+        
+    Raises:
+        HTTPException 404: If job is not found
+        HTTPException 400: If candidate email already exists for this job
     """
     # Check if the job exists
-    try:
-        job = db.query(models.Job).filter(models.Job.id == job_id).first()
-        logger.debug(f"Queried job: {job}")
-    except Exception as e:
-        logger.error(f"Error querying job: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error while querying job.")
+    job = db.query(models.Job).filter(models.Job.id == job_id).first()
     if not job:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Job not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Job with ID {job_id} not found"
+        )
 
-    # Check if a candidate with this email already exists for this job
-    try:
-        existing_candidate = db.query(models.Candidate).filter(
-            models.Candidate.email == candidate_create.email,
-            models.Candidate.job_id == job_id
-    ).first()
-        logger.debug(f"Queried existing_candidate: {existing_candidate}")
-    except Exception as e:
-        logger.error(f"Error querying existing candidate: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error while querying candidate.")
-    
     # Check if candidate already exists for this job
     existing_candidate = db.query(models.Candidate).filter(
-        models.Candidate.email == candidate_create.email, 
+        models.Candidate.email == candidate_create.email,
         models.Candidate.job_id == job_id
     ).first()
+    
     if existing_candidate:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, 
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="A candidate with this email is already registered for this job."
         )
 
     # Create new candidate
     try:
-        new_candidate = models.Candidate(**candidate_create.dict(), job_id=job_id)
+        new_candidate = models.Candidate(
+            **candidate_create.model_dump(),
+            job_id=job_id
+        )
         db.add(new_candidate)
         db.commit()
         db.refresh(new_candidate)
-        logger.debug(f"Created new_candidate: {new_candidate}")
+        logger.info(f"Created new candidate: {new_candidate.id} for job: {job_id}")
+        return new_candidate
     except Exception as e:
-        logger.error(f"Error creating new candidate: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error while creating candidate.")
-    db.add(new_candidate)
-    db.commit()
-    db.refresh(new_candidate)
-    return new_candidate
+        db.rollback()
+        logger.error(f"Error creating candidate: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to create candidate. Please try again."
+        )
 
 @router.post("/candidates/{candidate_id}/cv", response_model=schemas.CVEvaluationResponse, tags=["Candidates"])
 async def upload_and_evaluate_cv(candidate_id: uuid.UUID, cv_file: UploadFile = File(...), db: Session = Depends(get_db)):

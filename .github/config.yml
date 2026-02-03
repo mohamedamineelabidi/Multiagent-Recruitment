@@ -1,0 +1,29 @@
+# Configuration for welcome bot - greets new contributors
+# https://github.com/apps/welcome
+
+newIssueWelcomeComment: |
+  👋 Thanks for opening your first issue here! We appreciate you taking the time to report this.
+
+  A maintainer will review your issue soon. In the meantime, please make sure you've:
+  - [ ] Searched for existing issues
+  - [ ] Provided all requested information
+  - [ ] Used a clear and descriptive title
+
+  If you have questions, feel free to ask in the comments!
+
+newPRWelcomeComment: |
+  🎉 Thanks for your first pull request! We're excited to have you contribute to ARYA.
+
+  A maintainer will review your PR soon. Please make sure:
+  - [ ] Tests pass (if applicable)
+  - [ ] Code follows the project style guidelines
+  - [ ] Documentation is updated (if needed)
+
+  Thanks for helping make ARYA better! 🚀
+
+firstPRMergeComment: |
+  🎊 Congratulations on getting your first pull request merged! 
+
+  You're now officially a contributor to ARYA! Thank you for your contribution.
+
+  We hope to see more contributions from you in the future! 🙌

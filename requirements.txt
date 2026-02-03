@@ -1,12 +1,48 @@
-fastapi
-uvicorn[standard]
-sqlalchemy
-pydantic[email]
-python-dotenv
-python-multipart
-openai
-fpdf
-PyPDF2
-psycopg2-binary
-pydantic
-pydantic-settings 
+# ============================================
+# ARYA API - Python Dependencies
+# ============================================
+# Install with: pip install -r requirements.txt
+
+# -----------------------------
+# Web Framework
+# -----------------------------
+fastapi>=0.109.0,<1.0.0
+uvicorn[standard]>=0.27.0,<1.0.0
+
+# -----------------------------
+# Database
+# -----------------------------
+sqlalchemy>=2.0.0,<3.0.0
+psycopg2-binary>=2.9.9,<3.0.0
+
+# -----------------------------
+# Data Validation
+# -----------------------------
+pydantic>=2.5.0,<3.0.0
+pydantic-settings>=2.1.0,<3.0.0
+python-dotenv>=1.0.0,<2.0.0
+
+# -----------------------------
+# File Handling
+# -----------------------------
+python-multipart>=0.0.6,<1.0.0
+PyPDF2>=3.0.0,<4.0.0
+fpdf>=1.7.2,<2.0.0
+
+# -----------------------------
+# AI / Machine Learning
+# -----------------------------
+openai>=1.10.0,<2.0.0
+
+# -----------------------------
+# Development (Optional)
+# -----------------------------
+# Uncomment for development
+# pytest>=7.4.0
+# pytest-cov>=4.1.0
+# pytest-asyncio>=0.23.0
+# httpx>=0.26.0
+# black>=24.1.0
+# isort>=5.13.0
+# flake8>=7.0.0
+# mypy>=1.8.0
