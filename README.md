@@ -9,8 +9,6 @@
 
 ARYA (AI Recruitment & Yield Assessment) is an enterprise-grade API platform that transforms traditional hiring processes using AI technology. Built with a multi-agent architecture, ARYA automates and enhances candidate evaluation workflows.
 
-**Live API:** https://arya-recruitment-api-v2.azurewebsites.net
-
 ---
 
 ## Table of Contents
